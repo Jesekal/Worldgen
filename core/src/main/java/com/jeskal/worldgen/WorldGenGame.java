@@ -5,7 +5,9 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.utils.ScreenUtils;
+import com.jeskal.worldgen.render.ChunkRenderer;
 import com.jeskal.worldgen.render.TileRenderer;
+import com.jeskal.worldgen.world.Chunk;
 import com.jeskal.worldgen.world.Tile;
 import com.jeskal.worldgen.world.Tiletype;
 
@@ -15,21 +17,36 @@ public class WorldGenGame extends ApplicationAdapter {
     private ShapeRenderer shapeRenderer;
     private TileRenderer tileRenderer;
     private Tile testTile;
+    private ChunkRenderer chunkRenderer;
+    private Chunk testChunk;
 
     @Override
     public void create() {
         shapeRenderer = new ShapeRenderer();
-        tileRenderer = new TileRenderer();
+        chunkRenderer = new ChunkRenderer();
 
-        testTile = new Tile(Tiletype.GRASS);
+        testChunk = new Chunk();
+
+        for (int x = 0; x < Chunk.WIDTH; x++) {
+            for (int y = 0; y < Chunk.WIDTH; y++) {
+                int sum = x + y;
+
+                if(sum % 2 == 0) {
+                    testChunk.setTile(x, y, new Tile(Tiletype.GRASS));
+                }
+                else {
+                    testChunk.setTile(x, y, new Tile(Tiletype.WATER));
+                }
+
+            }
+        }
     }
-
     @Override
     public void render() {
         ScreenUtils.clear(0, 0, 0, 1);
 
         shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
-        tileRenderer.render(shapeRenderer, testTile, 100, 100);
+        chunkRenderer.render(shapeRenderer, testChunk, 100, 100);
         shapeRenderer.end();
     }
 

@@ -8,7 +8,7 @@ import com.jeskal.worldgen.world.Tiletype;
 
 public class TileRenderer {
 
-    private static final int TILE_SIZE = 32;
+    public static final int TILE_SIZE = 32;
 
     public void render(ShapeRenderer shapeRenderer, Tile tile, int x, int y) {
         if(tile.getType() == Tiletype.GRASS) {
@@ -21,5 +21,7 @@ public class TileRenderer {
 
         shapeRenderer.rect(x, y, TILE_SIZE, TILE_SIZE);
     }
+
+
 }
 

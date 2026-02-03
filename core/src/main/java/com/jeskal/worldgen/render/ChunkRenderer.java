@@ -1,0 +1,28 @@
+package com.jeskal.worldgen.render;
+
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.jeskal.worldgen.world.Chunk;
+import com.jeskal.worldgen.world.Tile;
+
+public class ChunkRenderer {
+    private final TileRenderer tileRenderer;
+
+    public ChunkRenderer() {
+        this.tileRenderer = new TileRenderer();
+    }
+
+    public void render(ShapeRenderer renderer, Chunk chunk, int chunkWorldX, int chunkWorldY) {
+        for (int x = 0; x < Chunk.WIDTH; x++) {
+            for (int y = 0; y < Chunk.WIDTH; y++) {
+
+                Tile tile = chunk.getTile(x, y);
+                if (tile == null) continue;
+
+                int worldX = chunkWorldX + x * TileRenderer.TILE_SIZE;
+                int worldY = chunkWorldY + y * TileRenderer.TILE_SIZE;
+
+                tileRenderer.render(renderer, tile, worldX, worldY);
+            }
+        }
+    }
+}
