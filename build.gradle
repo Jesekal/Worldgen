@@ -15,7 +15,13 @@ buildscript {
 allprojects {
   apply plugin: 'eclipse'
   apply plugin: 'idea'
+  apply plugin: 'java'
 
+  java {
+    toolchain {
+      languageVersion.set(JavaLanguageVersion.of(17)) // eller 18 om du vill
+    }
+  }
   // This allows you to "Build and run using IntelliJ IDEA", an option in IDEA's Settings.
   idea {
     module {
