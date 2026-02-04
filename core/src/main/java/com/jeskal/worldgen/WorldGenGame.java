@@ -10,9 +10,11 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.jeskal.worldgen.render.ChunkRenderer;
 import com.jeskal.worldgen.render.TileRenderer;
+import com.jeskal.worldgen.render.WorldRenderer;
 import com.jeskal.worldgen.world.Chunk;
 import com.jeskal.worldgen.world.Tile;
 import com.jeskal.worldgen.world.Tiletype;
+import com.jeskal.worldgen.world.World;
 
 
 /** {@link com.badlogic.gdx.ApplicationListener} implementation shared by all platforms. */
@@ -23,44 +25,52 @@ public class WorldGenGame extends ApplicationAdapter {
     private ChunkRenderer chunkRenderer;
     private Chunk testChunk;
     private OrthographicCamera camera;
+    private WorldRenderer worldRenderer;
+    private World world;
 
     private static final float CAMERA_SPEED = 300f;
 
     @Override
     public void create() {
         shapeRenderer = new ShapeRenderer();
-        chunkRenderer = new ChunkRenderer();
+        worldRenderer = new WorldRenderer();
 
         camera = new OrthographicCamera();
         camera.setToOrtho(false, 800, 600);
-        camera.update();
 
-        testChunk = new Chunk();
+        world = new World();
 
-        for (int x = 0; x < Chunk.WIDTH; x++) {
-            for (int y = 0; y < Chunk.WIDTH; y++) {
-                int sum = x + y;
+        for (int cx = -1; cx <= 1; cx++) {
+            for (int cy = -1; cy <= 1; cy++) {
+                Chunk chunk = new Chunk(cx, cy);
 
-                if(sum % 2 == 0) {
-                    testChunk.setTile(x, y, new Tile(Tiletype.GRASS));
+                for (int x = 0; x < Chunk.WIDTH; x++) {
+                    for (int y = 0; y < Chunk.WIDTH; y++) {
+                        if(x == 0 || y == 0){
+                            chunk.setTile(x, y, new Tile(Tiletype.WATER));
+                        }
+                        else {
+                            chunk.setTile(x, y, new Tile(Tiletype.GRASS));
+                        }
+                    }
                 }
-                else {
-                    testChunk.setTile(x, y, new Tile(Tiletype.WATER));
-                }
 
+                world.addChunk(cx, cy, chunk);
             }
         }
     }
     @Override
     public void render() {
-        float delta = Gdx.graphics.getDeltaTime();
-
-        handleInput(delta);
+        handleInput(Gdx.graphics.getDeltaTime());
         camera.update();
+
         ScreenUtils.clear(0, 0, 0, 1);
+
         shapeRenderer.setProjectionMatrix(camera.combined);
         shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
-        chunkRenderer.render(shapeRenderer, testChunk, 100, 100);
+
+        worldRenderer.render(shapeRenderer, world);
+
         shapeRenderer.end();
     }
 

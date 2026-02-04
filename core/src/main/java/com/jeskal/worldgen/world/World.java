@@ -4,21 +4,21 @@ import java.awt.*;
 import java.util.HashMap;
 import java.util.Map;
 
-public class World {
-    private final Map<Dimension, Chunk> chunks = new HashMap<>();
+public class World implements HashPosition{
+    private final Map<Long, Chunk> chunks = new HashMap<>();
     public void addChunk(int chunkX, int chunkY, Chunk chunk) {
-        chunks.put(key(chunkX, chunkY), chunk);
+        chunks.put(chunk.hashValue(), chunk);
     }
 
     public Chunk getChunk(int chunkX, int chunkY) {
-        return chunks.get(key(chunkX, chunkY));
+        return chunks.get(HashPosition.getHash(chunkX, chunkY));
     }
 
-    public Map<Dimension, Chunk> getChunks() {
+    public Map<Long, Chunk> getChunks() {
         return chunks;
     }
 
-    private Dimension key(int x, int y) {
-        return new Dimension(x, y);
-    }
+//    private Dimension key(int x, int y) {
+//        return new Dimension(x, y);
+//    }
 }

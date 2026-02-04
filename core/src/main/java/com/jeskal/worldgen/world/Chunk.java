@@ -1,12 +1,12 @@
 package com.jeskal.worldgen.world;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class Chunk {
     public static final int WIDTH = 8;
     private final Tile[][] tiles;
-    public Chunk() {
+    private Position pos;
+
+    public Chunk(int x, int y) {
+        this.pos = new Position(x,y);
         tiles = new Tile[WIDTH][WIDTH];
     }
     public void setTile(int x, int y, Tile tile) {
@@ -26,4 +26,13 @@ public class Chunk {
     private boolean inBounds(int x, int y) {
         return x >= 0 && x < WIDTH && y >= 0 && y < WIDTH;
     }
+
+    public Position getChunkPos() {
+        return this.pos;
+    }
+
+    public long hashValue(){
+        return this.pos.getHash();
+    }
+
 }
