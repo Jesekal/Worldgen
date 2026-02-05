@@ -5,6 +5,9 @@ import com.jeskal.worldgen.world.Chunk;
 import com.jeskal.worldgen.world.Tile;
 import com.jeskal.worldgen.world.World;
 
+/*
+Responsible handling rendering for world
+ */
 public class WorldRenderer {
     private final ChunkRenderer chunkRenderer;
 

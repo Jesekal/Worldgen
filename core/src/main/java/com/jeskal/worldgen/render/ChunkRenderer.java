@@ -4,6 +4,9 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.jeskal.worldgen.world.Chunk;
 import com.jeskal.worldgen.world.Tile;
 
+/*
+Tells the shaperenderer how to render a chunk
+ */
 public class ChunkRenderer {
     private final TileRenderer tileRenderer;
 

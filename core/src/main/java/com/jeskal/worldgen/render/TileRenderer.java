@@ -5,7 +5,9 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.jeskal.worldgen.world.Tile;
 import com.jeskal.worldgen.world.Tiletype;
 
-
+/*
+Tells the shaperenderer how to render the tiles
+ */
 public class TileRenderer {
 
 

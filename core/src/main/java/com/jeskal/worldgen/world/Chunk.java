@@ -1,5 +1,8 @@
 package com.jeskal.worldgen.world;
 
+/*
+Chunks are dynamically loaded and contains a 8x8 grid of tiles. They are Associated with a (x,y) Position and have a unique hash
+ */
 public class Chunk {
     public static final int WIDTH = 8;
     private final Tile[][] tiles;

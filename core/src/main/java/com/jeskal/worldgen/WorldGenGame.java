@@ -7,22 +7,21 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.jeskal.worldgen.input.CameraController;
 import com.jeskal.worldgen.render.WorldRenderer;
-import com.jeskal.worldgen.world.Chunk;
-import com.jeskal.worldgen.world.Tile;
-import com.jeskal.worldgen.world.Tiletype;
-import com.jeskal.worldgen.world.World;
+import com.jeskal.worldgen.world.*;
 
 public class WorldGenGame extends ApplicationAdapter {
 
     private ShapeRenderer shapeRenderer;
     private OrthographicCamera camera;
     private CameraController cameraController;
+    private ChunkManager myManagaer;
 
     private WorldRenderer worldRenderer;
     private World world;
 
     @Override
     public void create() {
+
         shapeRenderer = new ShapeRenderer();
         worldRenderer = new WorldRenderer();
 
@@ -33,7 +32,7 @@ public class WorldGenGame extends ApplicationAdapter {
         Gdx.input.setInputProcessor(cameraController);
 
         world = new World();
-
+        myManagaer = new ChunkManager(world, 1);
         for (int cx = -1; cx <= 1; cx++) {
             for (int cy = -1; cy <= 1; cy++) {
                 Chunk chunk = new Chunk(cx, cy);
@@ -66,6 +65,7 @@ public class WorldGenGame extends ApplicationAdapter {
         shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
 
         worldRenderer.render(shapeRenderer, world);
+        myManagaer.update(camera);
 
         shapeRenderer.end();
     }
