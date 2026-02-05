@@ -18,8 +18,8 @@ public class ChunkRenderer {
                 Tile tile = chunk.getTile(x, y);
                 if (tile == null) continue;
 
-                int worldX = chunkWorldX + x * TileRenderer.TILE_SIZE;
-                int worldY = chunkWorldY + y * TileRenderer.TILE_SIZE;
+                int worldX = chunkWorldX + x * Tile.size;
+                int worldY = chunkWorldY + y * Tile.size;
 
                 tileRenderer.render(renderer, tile, worldX, worldY);
             }

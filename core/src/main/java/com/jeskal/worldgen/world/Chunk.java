@@ -4,6 +4,7 @@ public class Chunk {
     public static final int WIDTH = 8;
     private final Tile[][] tiles;
     private Position pos;
+    public static final int CHUNKSIZE = Tile.size * WIDTH;
 
     public Chunk(int x, int y) {
         this.pos = new Position(x,y);
