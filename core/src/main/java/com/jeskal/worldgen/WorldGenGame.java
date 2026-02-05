@@ -5,10 +5,14 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.utils.ScreenUtils;
+import com.jeskal.worldgen.generation.ChunkManager;
 import com.jeskal.worldgen.input.CameraController;
 import com.jeskal.worldgen.render.WorldRenderer;
 import com.jeskal.worldgen.world.*;
 
+/*
+The main class. WOrks in 3 parts, create (start), render (update) and dispose(close)
+ */
 public class WorldGenGame extends ApplicationAdapter {
 
     private ShapeRenderer shapeRenderer;
@@ -32,24 +36,9 @@ public class WorldGenGame extends ApplicationAdapter {
         Gdx.input.setInputProcessor(cameraController);
 
         world = new World();
-        myManagaer = new ChunkManager(world, 1);
-        for (int cx = -1; cx <= 1; cx++) {
-            for (int cy = -1; cy <= 1; cy++) {
-                Chunk chunk = new Chunk(cx, cy);
+        myManagaer = new ChunkManager(world, 0);
 
-                for (int x = 0; x < Chunk.WIDTH; x++) {
-                    for (int y = 0; y < Chunk.WIDTH; y++) {
-                        if (x == 0 || y == 0) {
-                            chunk.setTile(x, y, new Tile(Tiletype.WATER));
-                        } else {
-                            chunk.setTile(x, y, new Tile(Tiletype.GRASS));
-                        }
-                    }
-                }
 
-                world.addChunk(cx, cy, chunk);
-            }
-        }
     }
 
     @Override

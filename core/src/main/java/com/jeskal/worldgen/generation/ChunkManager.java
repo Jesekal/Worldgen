@@ -1,10 +1,8 @@
-package com.jeskal.worldgen.world;
+package com.jeskal.worldgen.generation;
 
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.MathUtils;
-
-import java.util.HashSet;
-import java.util.Set;
+import com.jeskal.worldgen.world.*;
 
 public class ChunkManager {
     private final World world;
@@ -18,6 +16,7 @@ public class ChunkManager {
     public void update(OrthographicCamera camera) {
         ChunkRange range = getVisibleChunkRange(camera);
 
+        //Set<Position>
 
         for (int cx = range.minX - loadRadius; cx <= range.maxX + loadRadius; cx++) {
             for (int cy = range.minY - loadRadius; cy <= range.maxY + loadRadius; cy++) {
@@ -36,7 +35,13 @@ public class ChunkManager {
 
         for (int x = 0; x < Chunk.WIDTH; x++) {
             for (int y = 0; y < Chunk.WIDTH; y++) {
-                chunk.setTile(x, y, new Tile(Tiletype.GRASS));
+                if(x == 0 || y == 0) {
+                    chunk.setTile(x, y, new Tile(Tiletype.GRASS));
+                }
+                else {
+                    chunk.setTile(x, y, new Tile(Tiletype.WATER));
+                }
+
             }
         }
         return chunk;

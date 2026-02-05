@@ -19,7 +19,7 @@ public class CameraController extends InputAdapter {
     private final float maxZoom;
 
     public CameraController(OrthographicCamera camera) {
-        this(camera, 300f, 0.1f, 0.5f, 4f);
+        this(camera, 300f, 0.1f, 0.5f, 100f);
     }
 
     public CameraController(
