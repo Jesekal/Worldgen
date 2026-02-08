@@ -4,6 +4,16 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.MathUtils;
 import com.jeskal.worldgen.world.*;
 
+
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
+
+/*
+Loads and unload chunks dynamically
+ */
 public class ChunkManager {
     private final World world;
     private final int loadRadius;
@@ -16,18 +26,30 @@ public class ChunkManager {
     public void update(OrthographicCamera camera) {
         ChunkRange range = getVisibleChunkRange(camera);
 
-        //Set<Position>
+        Set<Position> visible = new HashSet<>();
+
 
         for (int cx = range.minX - loadRadius; cx <= range.maxX + loadRadius; cx++) {
             for (int cy = range.minY - loadRadius; cy <= range.maxY + loadRadius; cy++) {
-
+                visible.add(new Position(cx, cy));
 
                 if (!world.hasChunk(cx, cy)) {
+
                     world.addChunk(cx, cy, generateChunk(cx, cy));
                 }
             }
         }
+        //Remove all chunks not visible to the camera
+        List<Position> toRemove = new ArrayList<>();
+        for (Chunk chunk : world.getChunks()) {
+            if(!visible.contains(chunk.getChunkPos())) {
+                toRemove.add(chunk.getChunkPos());
+            }
+        }
 
+        for (Position p : toRemove) {
+            world.removeChunk(p.getX(), p.getY());
+        }
     }
 
     private Chunk generateChunk(int cx, int cy) {

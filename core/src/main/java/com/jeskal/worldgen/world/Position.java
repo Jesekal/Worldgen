@@ -29,4 +29,9 @@ public class Position implements HashPosition {
     public long getHash() {
         return HashPosition.getHash(this.x, this.y);
     }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(x, y);
+    }
 }
